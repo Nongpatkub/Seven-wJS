@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Anniversary!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Mali', cursive; overflow: hidden; background: linear-gradient(135deg, #e0f2fe 0%, #ffe4e6 100%); touch-action: manipulation; margin: 0;}
+        .screen { display: none; width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+        .active { display: flex; }
+        
+        /* Screen 1: Calendar */
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; width: 90%; max-width: 350px; text-align: center; background: rgba(255,255,255,0.8); padding: 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); backdrop-filter: blur(10px); }
+        .day { padding: 10px; border-radius: 50%; font-weight: 600; color: #475569; cursor: pointer; transition: background 0.2s; }
+        .day:active { background: #cbd5e1; }
+        .heartbreak { position: absolute; font-size: 2rem; pointer-events: none; animation: float 1s ease-out forwards; }
+        @keyframes float { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-60px) scale(1.5); opacity: 0; } }
+
+        /* Screen 2: Camera */
+        .viewfinder { width: 90%; height: 50vh; background: #111; border: 4px solid #333; border-radius: 10px; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .crosshair { border: 1px solid rgba(255,255,255,0.3); width: 70%; height: 70%; position: absolute; pointer-events: none; }
+        .cam-info { position: absolute; bottom: 10px; color: #10b981; font-family: monospace; font-size: 1.2rem; display: flex; justify-content: space-between; width: 90%; pointer-events: none;}
+        .flash-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: white; opacity: 0; pointer-events: none; z-index: 50; transition: opacity 0.1s; }
+        .film-gallery { width: 90%; height: 160px; margin-top: 20px; display: flex; gap: 15px; overflow-x: auto; padding: 10px; scroll-snap-type: x mandatory; }
+        .polaroid { min-width: 120px; height: 140px; background: white; padding: 8px 8px 24px 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 4px; scroll-snap-align: center; background-size: cover; background-position: center; display: flex; align-items: flex-end; justify-content: center;}
+        .shutter-btn { margin-top: 20px; width: 70px; height: 70px; background: #ef4444; border-radius: 50%; border: 4px solid #f87171; box-shadow: 0 0 15px rgba(239,68,68,0.5); }
+        .shutter-btn:active { transform: scale(0.95); }
+
+        /* Screen 3: Envelope */
+        .envelope-wrapper { width: 90%; max-width: 350px; height: 500px; background: #fdfbf7; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .tear-strip { height: 60px; background: #e2e8f0; border-bottom: 3px dashed #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: bold; color: #64748b; cursor: pointer; user-select: none; position: relative; z-index: 20; transition: opacity 0.3s; }
+        .letter-content { flex: 1; padding: 20px; display: none; flex-direction: column; align-items: center; justify-content: space-between; background: repeating-linear-gradient(transparent, transparent 39px, #e2e8f0 40px); background-attachment: local; line-height: 40px; overflow-y: auto; opacity: 0; animation: fadeIn 1s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .crayon-drawing { font-size: 4rem; text-align: center; margin-top: 20px; }
+
+        /* Screen 4: Scratch Card */
+        .scratch-container { position: relative; width: 300px; height: 200px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); background: white; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; border: 2px dashed #f43f5e; }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; cursor: pointer; }
+
+        /* Screen 5: Bouquet */
+        .bouquet-wrapper { position: absolute; bottom: -20px; width: 100vw; height: 65vh; display: flex; justify-content: center; align-items: flex-end; pointer-events: none; }
+        .bouquet-svg { width: 180%; max-width: 500px; height: auto; transform: translateY(100%); transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .bouquet-svg.show { transform: translateY(0); }
+        .gift-btn { animation: bounce 2s infinite; font-size: 5rem; background: none; border: none; cursor: pointer; z-index: 20;}
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-30px);} 60% {transform: translateY(-15px);} }
+        .final-message { position: absolute; top: 10%; width: 100%; text-align: center; opacity: 0; transition: opacity 2s; z-index: 10; display: flex; flex-direction: column; align-items: center;}
+        .final-message.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<!-- Screen 1: Calendar -->
+<div id="screen-1" class="screen active">
+    <h1 class="text-3xl font-bold text-slate-700 mb-6 drop-shadow-sm">October 2026</h1>
+    <div class="calendar-grid">
+        <div class="text-xs text-slate-400">Sun</div><div class="text-xs text-slate-400">Mon</div><div class="text-xs text-slate-400">Tue</div><div class="text-xs text-slate-400">Wed</div><div class="text-xs text-slate-400">Thu</div><div class="text-xs text-slate-400">Fri</div><div class="text-xs text-slate-400">Sat</div>
+        <div></div><div></div><div></div><div></div>
+        <script>
+            for(let i=1; i<=31; i++) {
+                document.write(`<div class="day" onclick="checkDate(${i}, event)">${i}</div>`);
+            }
+        </script>
+    </div>
+</div>
+
+<!-- Screen 2: Camera -->
+<div id="screen-2" class="screen">
+    <div class="viewfinder" id="viewfinder">
+        <div class="crosshair"></div>
+        <div class="cam-info">
+            <span>ISO400</span>
+            <span id="film-counter">0/7</span>
+        </div>
+        <div class="flash-overlay" id="flash"></div>
+    </div>
+    <div class="film-gallery" id="gallery"></div>
+    <button class="shutter-btn" onclick="takePhoto()"></button>
+    <button id="btn-next-stage2" class="mt-4 px-6 py-2 bg-slate-800 text-white rounded-full hidden" onclick="nextScreen(3)">เปิดจดหมาย 💌</button>
+</div>
+
+<!-- Screen 3: Envelope -->
+<div id="screen-3" class="screen">
+    <div class="envelope-wrapper" id="envelope">
+        <div class="tear-strip" id="tear-strip" ontouchmove="handleTear(event)" onmousemove="handleTearMouse(event)" onmousedown="startTear()" onmouseup="endTear()">
+            <span class="pointer-events-none">✨ ปาดนิ้วเพื่อฉีกซอง ✨</span>
+        </div>
+        <div class="letter-content" id="letter">
+            <div class="w-full text-left text-lg text-slate-700 pt-2 font-semibold">
+                Happy Anniversary!<br><br>
+                ขอบคุณสำหรับทุกอย่างเลยนะ<br>
+                อยู่ด้วยกันไปนานๆ นะ<br><br>
+                รักที่สุดเลย ❤️
+            </div>
+            <div class="crayon-drawing">🖍️🌸💖</div>
+        </div>
+    </div>
+    <button id="btn-next-stage3" class="mt-6 px-6 py-2 bg-pink-400 text-white rounded-full hidden shadow-lg" onclick="nextScreen(4)">ถัดไป 🎁</button>
+</div>
+
+<!-- Screen 4: Scratch Card -->
+<div id="screen-4" class="screen">
+    <h2 class="text-2xl font-bold text-slate-700 mb-6 drop-shadow-sm">ของขวัญสำหรับคนเก่ง! 🪙</h2>
+    <div class="scratch-container">
+        <div class="text-xl font-bold text-rose-500">🎟️ โควต้าอาหารอร่อย <br> & กอดไม่จำกัด!!</div>
+        <canvas id="scratch-canvas"></canvas>
+    </div>
+    <button id="btn-next-stage4" class="mt-8 px-6 py-2 bg-rose-400 text-white rounded-full hidden shadow-lg" onclick="nextScreen(5)">รับชิ้นสุดท้าย 🌸</button>
+</div>
+
+<!-- Screen 5: Bouquet & Final -->
+<div id="screen-5" class="screen" style="background: linear-gradient(to bottom, #f0f9ff, #e0f2fe);">
+    <button class="gift-btn" id="gift-box" onclick="openGift()">🎁</button>
+    
+    <div class="final-message" id="final-msg">
+        <h1 class="text-4xl font-bold text-rose-500 drop-shadow-md bg-white/70 px-4 py-2 rounded-2xl backdrop-blur-sm">พัดรักซอที่สุ้ดด ❤️</h1>
+        <button class="mt-6 px-6 py-2 bg-white text-rose-500 border-2 border-rose-400 font-bold rounded-full shadow-lg" onclick="location.reload()">เริ่มดูใหม่ 🔄</button>
+    </div>
+
+    <div class="bouquet-wrapper">
+        <svg class="bouquet-svg" id="bouquet" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <!-- Back wrapper -->
+            <path d="M 50 250 L 120 500 L 280 500 L 350 250 Z" fill="#bcaaa4" />
+            
+            <!-- Leaves back -->
+            <path d="M 100 150 Q 30 100 70 220 Z" fill="#4ade80" />
+            <path d="M 300 150 Q 370 100 330 220 Z" fill="#4ade80" />
+            <path d="M 200 80 Q 150 20 250 20 Z" fill="#4ade80" />
+
+            <!-- Hydrangeas clusters -->
+            <circle cx="200" cy="180" r="75" fill="#c4b5fd" />
+            <circle cx="140" cy="210" r="65" fill="#93c5fd" />
+            <circle cx="260" cy="210" r="65" fill="#f9a8d4" />
+            <circle cx="170" cy="140" r="60" fill="#a78bfa" />
+            <circle cx="230" cy="140" r="60" fill="#fbcfe8" />
+            <circle cx="120" cy="170" r="50" fill="#bfdbfe" />
+            <circle cx="280" cy="170" r="50" fill="#f472b6" />
+            
+            <!-- Hydrangea details (small florets simulation) -->
+            <g fill="#ede9fe"> <circle cx="200" cy="180" r="8"/> <circle cx="210" cy="170" r="8"/> <circle cx="220" cy="180" r="8"/> <circle cx="210" cy="190" r="8"/> <circle cx="210" cy="180" r="3" fill="#fef08a"/> </g>
+            <g fill="#e0e7ff" transform="translate(-50, 20)"> <circle cx="200" cy="180" r="8"/> <circle cx="210" cy="170" r="8"/> <circle cx="220" cy="180" r="8"/> <circle cx="210" cy="190" r="8"/> <circle cx="210" cy="180" r="3" fill="#fef08a"/> </g>
+            <g fill="#fce7f3" transform="translate(50, 20)"> <circle cx="200" cy="180" r="8"/> <circle cx="210" cy="170" r="8"/> <circle cx="220" cy="180" r="8"/> <circle cx="210" cy="190" r="8"/> <circle cx="210" cy="180" r="3" fill="#fef08a"/> </g>
+
+            <!-- Front wrapper -->
+            <path d="M 20 250 Q 200 370 380 250 L 280 500 L 120 500 Z" fill="#d7ccc8" />
+            <path d="M 120 500 L 200 340 L 280 500 Z" fill="#e0e0e0" opacity="0.3" />
+            
+            <!-- Ribbon -->
+            <path d="M 150 400 Q 200 420 250 400 Q 200 450 150 400 Z" fill="#fb7185" />
+            <circle cx="200" cy="415" r="15" fill="#f43f5e" />
+            <path d="M 190 425 L 150 500 L 180 500 L 200 430 Z" fill="#f43f5e" />
+            <path d="M 210 425 L 250 500 L 220 500 L 200 430 Z" fill="#f43f5e" />
+
+            <!-- The "7" Tag -->
+            <line x1="260" y1="280" x2="280" y2="340" stroke="#94a3b8" stroke-width="2" stroke-dasharray="2,2"/>
+            <rect x="255" y="335" width="50" height="60" rx="5" fill="#fef08a" transform="rotate(-15 280 340)" />
+            <circle cx="265" cy="345" r="4" fill="#fff" transform="rotate(-15 280 340)"/>
+            <text x="265" y="380" font-family="Mali, cursive" font-size="35" font-weight="bold" fill="#e11d48" transform="rotate(-15 280 340)">7</text>
+        </svg>
+    </div>
+</div>
+
+<script>
+    function nextScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        if (id === 4) initScratchCard();
+    }
+
+    function checkDate(day, event) {
+        if (day === 18) {
+            let el = event.target;
+            el.style.background = '#38bdf8';
+            el.style.color = 'white';
+            setTimeout(() => nextScreen(2), 500);
+        } else {
+            let heart = document.createElement('div');
+            heart.innerHTML = '💔';
+            heart.className = 'heartbreak';
+            heart.style.left = (event.clientX - 15) + 'px';
+            heart.style.top = (event.clientY - 15) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+    }
+
+    let photosTaken = 0;
+    const maxPhotos = 7;
+    const gallery = document.getElementById('gallery');
+    const counter = document.getElementById('film-counter');
+    const flash = document.getElementById('flash');
+    
+    // Abstract images to mimic film shots
+    const photoUrls = [
+        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120"><rect width="100" height="120" fill="%23fca5a5"/><text x="20" y="60" font-family="sans-serif" font-size="12" fill="white">Pic 1</text></svg>',
+        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120"><rect width="100" height="120" fill="%2393c5fd"/><text x="20" y="60" font-family="sans-serif" font-size="12" fill="white">Pic 2</text></svg>',
+        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120"><rect width="100" height="120" fill="%2386efac"/><text x="20" y="60" font-family="sans-serif" font-size="12" fill="white">Pic 3</text></svg>',
+        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120"><rect width="100" height="120" fill="%23d8b4fe"/><text x="20" y="60" font-family="sans-serif" font-size="12" fill="white">Pic 4</text></svg>',
+        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120"><rect width="100" height="120" fill="%23fde047"/><text x="20" y="60" font-family="sans-serif" font-size="12" fill="white">Pic 5</text></svg>',
+        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120"><rect width="100" height="120" fill="%23fdba74"/><text x="20" y="60" font-family="sans-serif" font-size="12" fill="white">Pic 6</text></svg>',
+        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120"><rect width="100" height="120" fill="%23cbd5e1"/><text x="20" y="60" font-family="sans-serif" font-size="12" fill="white">Pic 7</text></svg>'
+    ];
+
+    function takePhoto() {
+        if (photosTaken >= maxPhotos) return;
+        flash.style.opacity = '1';
+        setTimeout(() => flash.style.opacity = '0', 150);
+
+        let div = document.createElement('div');
+        div.className = 'polaroid';
+        div.style.backgroundImage = `url('${photoUrls[photosTaken]}')`;
+        gallery.appendChild(div);
+        
+        photosTaken++;
+        counter.innerText = `${photosTaken}/${maxPhotos}`;
+        gallery.scrollLeft = gallery.scrollWidth;
+
+        if (photosTaken === maxPhotos) {
+            document.getElementById('btn-next-stage2').classList.remove('hidden');
+            document.querySelector('.shutter-btn').style.opacity = '0.5';
+            document.querySelector('.shutter-btn').disabled = true;
+        }
+    }
+
+    const strip = document.getElementById('tear-strip');
+    const letter = document.getElementById('letter');
+    let tearProgress = 0;
+    let isTearing = false;
+    
+    function startTear() { isTearing = true; }
+    function endTear() { isTearing = false; }
+    function handleTearMouse(e) { if(isTearing) doTear(); }
+    function handleTear(e) { e.preventDefault(); doTear(); }
+    
+    function doTear() {
+        tearProgress += 4;
+        strip.style.opacity = 1 - (tearProgress / 100);
+        if (tearProgress >= 100) {
+            strip.style.display = 'none';
+            letter.style.display = 'flex';
+            document.getElementById('btn-next-stage3').classList.remove('hidden');
+        }
+    }
+
+    function initScratchCard() {
+        const canvas = document.getElementById('scratch-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.font = '24px Mali';
+        ctx.fillStyle = '#64748b';
+        ctx.textAlign = 'center';
+        ctx.fillText('ขูดเลย!', canvas.width/2, canvas.height/2);
+
+        let isDrawing = false;
+        let scratched = 0;
+
+        function getMousePos(evt) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: (evt.clientX || evt.touches[0].clientX) - rect.left,
+                y: (evt.clientY || evt.touches[0].clientY) - rect.top
+            };
+        }
+
+        function scratch(evt) {
+            if (!isDrawing) return;
+            evt.preventDefault();
+            const pos = getMousePos(evt);
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, 25, 0, Math.PI * 2);
+            ctx.fill();
+            scratched++;
+            if (scratched > 60) {
+                document.getElementById('btn-next-stage4').classList.remove('hidden');
+            }
+        }
+
+        canvas.addEventListener('mousedown', () => isDrawing = true);
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); }, {passive: false});
+        canvas.addEventListener('mousemove', scratch);
+        canvas.addEventListener('touchmove', scratch, {passive: false});
+        window.addEventListener('mouseup', () => isDrawing = false);
+        window.addEventListener('touchend', () => isDrawing = false);
+    }
+
+    function openGift() {
+        document.getElementById('gift-box').style.display = 'none';
+        document.getElementById('bouquet').classList.add('show');
+        setTimeout(() => {
+            document.getElementById('final-msg').classList.add('show');
+        }, 1200);
+    }
+</script>
+</body>
+</html>
