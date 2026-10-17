@@ -76,24 +76,24 @@ button:focus-visible { outline:3px solid var(--blue-deep); outline-offset:4px; }
 /* Scene 2 */
 .camera-shell { width:min(100%,390px);background:#453d38;padding:12px 12px 18px;border-radius:18px;box-shadow:0 18px 32px #46372b33;position:relative; }
 .camera-top { display:flex;justify-content:space-between;align-items:center;color:#e6d8c5;font:10px 'Special Elite',serif;letter-spacing:1px;padding:0 3px 10px; }
-.lens-view { height:clamp(170px,31vh,255px);border-radius:9px;overflow:hidden;position:relative;display:grid;place-items:center;background:linear-gradient(140deg,#9dbdca,#e9c9bc 60%,#e7d7b9);border:5px solid #2b2927; }
-.lens-view:before { content:"";position:absolute;inset:0;background:radial-gradient(circle at center,transparent 25%,#2e2a2833 100%);pointer-events:none; }
-.scene-art { font-size:clamp(3.4rem,16vw,6rem);filter:drop-shadow(0 9px 5px #55422b2a);transition:transform .25s; }
-.camera-hint { position:absolute;left:10px;top:10px;color:white;background:#292624aa;padding:4px 7px;border-radius:3px;font:10px 'Special Elite',serif; }
-.cam-info { position:absolute;bottom:9px;left:12px;right:12px;display:flex;justify-content:space-between;color:#fff8e7;font:12px 'Special Elite',serif; }
+.lens-view { height:clamp(170px,31vh,255px);border-radius:9px;overflow:hidden;position:relative;display:grid;place-items:center;background:#000;border:5px solid #2b2927; }
+.lens-view:before { content:"";position:absolute;inset:0;background:radial-gradient(circle at center,transparent 25%,#2e2a2833 100%);pointer-events:none;z-index:2; }
+.scene-art { width:100%;height:100%;display:grid;place-items:center;background-color:#000;transition:transform .25s;z-index:1;overflow:hidden; }
+.camera-hint { position:absolute;left:10px;top:10px;color:white;background:#292624aa;padding:4px 7px;border-radius:3px;font:10px 'Special Elite',serif;z-index:3; }
+.cam-info { position:absolute;bottom:9px;left:12px;right:12px;display:flex;justify-content:space-between;color:#fff8e7;font:12px 'Special Elite',serif;z-index:3;text-shadow:0 1px 3px rgba(0,0,0,.8); }
 .camera-bottom { display:flex;justify-content:center;align-items:center;gap:15px;margin-top:14px; }
 .camera-dot { width:10px;height:10px;border-radius:50%;background:#d1b8a1;box-shadow:inset 0 1px 2px #47372b; }
 .shutter-btn { width:58px;height:58px;border-radius:50%;border:5px solid #d8c6ae;background:var(--rose);box-shadow:0 3px 0 #6e4b47;cursor:pointer; }
 .shutter-btn:active { transform:scale(.93); }
 .film-gallery { width:min(100%,430px);display:flex;gap:12px;overflow-x:auto;padding:9px 6px 14px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#c5aa8d transparent; }
 .polaroid { flex:0 0 96px;height:116px;background:#fffdf5;padding:6px 6px 19px;box-shadow:0 4px 9px #51402d24;transform:rotate(var(--tilt,-2deg));scroll-snap-align:center;position:relative; }
-.polaroid .mini-photo { height:100%;display:grid;place-items:center;font-size:2rem;background:var(--photo-bg,#d9e3df); }
+.polaroid .mini-photo { height:100%;display:grid;place-items:center;font-size:2rem;background:var(--photo-bg,#d9e3df);overflow:hidden; }
 .polaroid .mini-label { position:absolute;bottom:3px;left:0;right:0;text-align:center;font:9px 'Special Elite',serif;color:#76675a; }
 .flash-overlay { position:fixed;inset:0;background:#fff9e9;opacity:0;pointer-events:none;z-index:120;transition:opacity .12s; }
 .flash-overlay.flash { opacity:.85; }
 
 /* Scene 3 */
-.envelope-wrapper { width:min(100%,365px);height:min(57svh,510px);min-height:360px;position:relative;background:#fffaf0;border:1px solid #dfd0b9;border-radius:9px;box-shadow:var(--shadow);overflow:hidden; }
+.envelope-wrapper { width:min(100%,365px);height:min(57svh,510px);min-height:360px;position:relative;background:#fff9ea;border:1px solid #dfd0b9;border-radius:9px;box-shadow:var(--shadow);overflow:hidden; }
 .envelope-header { background:#e6d6bf;padding:15px;text-align:center;font:11px 'Special Elite',serif;letter-spacing:1.5px;color:#75604d; }
 .tear-strip { min-height:68px;background:repeating-linear-gradient(135deg,#e7e4d9,#e7e4d9 9px,#f3eee2 9px,#f3eee2 18px);border-bottom:2px dashed #b9a68d;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;font-size:.88rem;font-weight:600;color:#776657;cursor:ew-resize;user-select:none;touch-action:pan-y;transition:opacity .3s; }
 .letter-content { height:calc(100% - 54px);padding:20px clamp(18px,5vw,28px);display:none;flex-direction:column;justify-content:space-between;gap:12px;overflow-y:auto;background:repeating-linear-gradient(transparent,transparent 35px,#d8d4c7 36px,#d8d4c7 37px);line-height:2.1;opacity:0; }
@@ -114,12 +114,13 @@ button:focus-visible { outline:3px solid var(--blue-deep); outline-offset:4px; }
 .final-screen { background:radial-gradient(ellipse at 50% 20%,#fffaf0 0,#f3e7d7 48%,#e2d8c9 100%); }
 .gift-btn { font-size:clamp(4rem,20vw,6rem);background:#fffaf0;border:1px solid #d8c2a8;border-radius:24px;padding:14px 24px;box-shadow:0 9px 0 #d8c2a8,0 20px 30px #6c4d3224;cursor:pointer;animation:bob 2.3s ease-in-out infinite;z-index:3; }
 @keyframes bob { 0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-9px) rotate(2deg)} }
-.final-message { position:relative;z-index:3;text-align:center;opacity:0;transform:translateY(10px);transition:opacity 1.2s,transform 1.2s;max-width:100%; }
-.final-message.show { opacity:1;transform:translateY(0); }
+.final-message { display:none;position:relative;z-index:3;text-align:center;opacity:0;transform:translateY(10px);transition:opacity 1.2s,transform 1.2s;max-width:100%; }
+.final-message.show { display:block;opacity:1;transform:translateY(0); }
 .final-title { font-size:clamp(1.6rem,7vw,2.8rem);line-height:1.5;color:var(--rose-dark);background:#fffaf0d9;border:1px solid #e5d2bd;border-radius:12px;padding:12px 18px;box-shadow:var(--shadow); }
-.bouquet-wrapper { width:min(100%,420px);height:clamp(180px,34vh,290px);display:flex;justify-content:center;align-items:flex-end;pointer-events:none;margin-top:-8px; }
-.bouquet-svg { width:min(100%,350px);height:100%;transform:translateY(115%);transition:transform 1.5s cubic-bezier(.175,.885,.32,1.275);overflow:visible; }
-.bouquet-svg.show { transform:translateY(0); }
+.bouquet-wrapper { width:min(100%,440px);height:clamp(210px,38vh,320px);display:flex;justify-content:center;align-items:flex-end;pointer-events:none;margin-top:-4px; }
+.bouquet-svg { width:min(100%,380px);height:100%;transform:translateY(115%) scale(.92);transition:transform 1.4s cubic-bezier(.175,.885,.32,1.275);overflow:visible;filter:drop-shadow(0 16px 24px rgba(82,58,38,.18)); }
+.bouquet-svg.show { transform:translateY(0) scale(1); animation:bouquetSway 4.5s ease-in-out 1.4s infinite; }
+@keyframes bouquetSway { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-5px) rotate(1.2deg)} }
 .confetti { position:fixed;top:-20px;z-index:110;pointer-events:none;animation:fall var(--dur,3s) linear forwards; }
 @keyframes fall { to{transform:translateY(110svh) rotate(520deg);opacity:.15} }
 .progress-dots { display:flex;gap:7px;align-items:center;justify-content:center;margin-top:2px; }
@@ -134,7 +135,7 @@ button:focus-visible { outline:3px solid var(--blue-deep); outline-offset:4px; }
  .film-gallery { padding-top:3px;padding-bottom:5px; }
  .envelope-wrapper { height:min(53svh,420px);min-height:320px; }
  .scratch-container { height:175px; }
- .bouquet-wrapper { height:clamp(130px,27vh,210px); }
+ .bouquet-wrapper { height:clamp(155px,30vh,230px); }
 }
 @media (prefers-reduced-motion:reduce) { *,*:before,*:after { animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important; } }
 </style>
@@ -145,115 +146,246 @@ button:focus-visible { outline:3px solid var(--blue-deep); outline-offset:4px; }
 <!-- SCENE 1: CALENDAR -->
 <section id="screen-1" class="screen active" aria-label="ปฏิทินวันพิเศษ">
   <span class="sticker" style="left:8%;top:12%">✦</span><span class="sticker" style="right:9%;top:20%;animation-delay:-1.5s">♡</span>
-  <p class="eyebrow">A LITTLE DATE TO REMEMBER</p>
-  <h1 class="heading">วันพิเศษของเรา</h1>
-  <p class="subheading">บางวันก็เป็นแค่วันธรรมดา<br>จนกระทั่งมีใครบางคนเข้ามา ♡</p>
+  <p class="eyebrow">For My JorSor Only</p>
+  <h1 class="heading">Our Special Day</h1>
+  <p class="subheading">ฮาโลล คนสวยของเค้าา<br>ลองกดวันที่เธอชอบจิ ♡</p>
   <div class="calendar-card paper-card">
     <div class="washi"></div>
     <div class="calendar-title">
-      <div><div class="tiny-label">OUR LITTLE STORY</div><div class="calendar-month">October 2026</div></div>
+      <div><div class="tiny-label"></div><div class="calendar-month">October 2026</div></div>
       <span style="font-size:1.8rem">📷</span>
     </div>
     <div class="calendar-grid" id="calendar-grid">
       <div class="weekday">SUN</div><div class="weekday">MON</div><div class="weekday">TUE</div><div class="weekday">WED</div><div class="weekday">THU</div><div class="weekday">FRI</div><div class="weekday">SAT</div>
     </div>
-    <div class="calendar-footer"><span>✦ a date worth keeping</span><span>tap the heart day ♥</span></div>
+    <div class="calendar-footer"><span>✦ วันหนัยดีๆๆๆ</span><span>วันที่ 18 รึเป่าา ♥</span></div>
   </div>
-  <p class="small-note">ลองเลือกวันที่ 18 เพื่อเริ่มเรื่องราวของเรา</p>
   <div class="progress-dots" aria-label="ฉากที่ 1 จาก 5"><span class="current"></span><span></span><span></span><span></span><span></span></div>
 </section>
 
 <!-- SCENE 2: FILM CAMERA -->
 <section id="screen-2" class="screen" aria-label="กล้องฟิล์มความทรงจำ">
-  <p class="eyebrow">CHAPTER 02 · THE MEMORIES</p>
-  <h2 class="heading">เก็บภาพของเราไว้ ♡</h2>
-  <p class="subheading">กดชัตเตอร์ให้ครบ 7 รูป<br>เหมือนม้วนฟิล์มเล็ก ๆ ของเรา</p>
+  <h2 class="heading">ถ่ายรูปกันนนน ♡</h2>
+  <p class="subheading">กดชัตเตอร์ให้ครบ 7 รูปนะะ<br></p>
   <div class="camera-shell">
     <div class="camera-top"><span>MEMORY 400</span><span>♥ FILM CAMERA</span><span>35 MM</span></div>
     <div class="lens-view" id="viewfinder">
       <div class="camera-hint">REC · MEMORY MODE</div>
-      <div class="scene-art" id="scene-art" aria-hidden="true">🌷</div>
+      <div class="scene-art" id="scene-art" aria-hidden="true"></div>
       <div class="cam-info"><span>ISO 400</span><span id="film-counter">0 / 7</span><span>♡</span></div>
     </div>
     <div class="camera-bottom"><span class="camera-dot"></span><button class="shutter-btn" id="shutter" onclick="takePhoto()" aria-label="ถ่ายภาพ"></button><span class="camera-dot"></span></div>
   </div>
   <div class="film-gallery" id="gallery" aria-label="ภาพที่ถ่ายแล้ว"></div>
-  <p class="small-note" id="camera-hint-text">ทุกภาพอาจไม่สมบูรณ์แบบ แต่เป็นความทรงจำของเรา</p>
+  <p class="small-note" id="camera-hint-text"></p>
   <button id="btn-next-stage2" class="primary-btn" hidden onclick="nextScreen(3)">เปิดจดหมาย 💌</button>
   <div class="progress-dots" aria-label="ฉากที่ 2 จาก 5"><span></span><span class="current"></span><span></span><span></span><span></span></div>
 </section>
 
 <!-- SCENE 3: LETTER -->
 <section id="screen-3" class="screen" aria-label="จดหมาย">
-  <p class="eyebrow">CHAPTER 03 · A LETTER FOR YOU</p>
   <h2 class="heading">มีอะไรอยากบอกนะ</h2>
   <p class="subheading">ค่อย ๆ เปิดซองจดหมายฉบับนี้ดูสิ</p>
   <div class="envelope-wrapper">
     <div class="envelope-header">A LITTLE LETTER · SEALED WITH LOVE</div>
     <div class="tear-strip" id="tear-strip" role="button" tabindex="0" aria-label="เปิดซองจดหมายด้วยการลากหรือแตะ" onpointerdown="startTear(event)" onpointermove="handleTearPointer(event)" onpointerup="endTear()" onpointercancel="endTear()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();revealLetter()}">
-      ✨ ลากนิ้วหรือแตะตรงนี้เพื่อเปิดจดหมาย ✨
+      ✨ ฉีกจดหมายเร้ววววว ✨
     </div>
     <div class="letter-content" id="letter">
       <div>
         <div class="letter-title">Happy Anniversary! ♡</div>
-        <div class="letter-body">ขอบคุณสำหรับทุกอย่างเลยนะ<br><br>อยู่ด้วยกันไปนาน ๆ นะ<br><br>รักที่สุดเลย ❤️</div>
+        <div class="letter-body">ครบรอบ 7 เดือนแล้วนา เค้ามีความตลอดเวลาที่ผ่านมานี้เลยนะ ดีใจมากมากที่มีเธอมาเป็นส่วนใหญ่ๆในชีวิตเลย เธอเป็นทั้งความสบายใจ ความสดใส คนช่วยแก้ปัญหาหลายๆอย่างในชีวิตเค้าเลย ไม่มีตงไหนของเธอมาทำให้เค้าแย่ลงเลยนะ เค้าหวังว่าเวลาต่อจากนี้และตลอดปัย เราจะได้ทำอะไรใหม่ๆด้วยกัน เรียนรู้ไปด้วยกันนะ ขอโทษทุกครั้งที่เค้าทำให้เธอรู้สึกแย่นะ เค้ารักเธอมากมาก รักเธอที่สุด รักบี๋ รักจิ๊กซอ รักอัย รักบุ๋ๆ ขอบคุณที่อยู่เคียงข้างกันนะ<br><br>Love you more than everything ❤️</div>
       </div>
-      <div class="letter-doodle">🖍️ 🌸 💖</div>
-      <div style="text-align:right;font-size:.8rem;color:var(--muted)">with all my love ♡</div>
+      <div class="letter-doodle">💖🐻🐻‍❄️💖</div>
+      <div style="text-align:right;font-size:.8rem;color:var(--muted)">From nongpat ♡</div>
     </div>
   </div>
   <button id="btn-next-stage3" class="primary-btn" hidden onclick="nextScreen(4)">ถัดไป 🎁</button>
-  <p class="small-note">บางความรู้สึก เขียนลงกระดาษแล้วดูพิเศษขึ้นอีกนิด</p>
   <div class="progress-dots" aria-label="ฉากที่ 3 จาก 5"><span></span><span></span><span class="current"></span><span></span><span></span></div>
 </section>
 
 <!-- SCENE 4: SCRATCH CARD -->
 <section id="screen-4" class="screen" aria-label="การ์ดขูดของขวัญ">
-  <p class="eyebrow">CHAPTER 04 · A LITTLE SURPRISE</p>
-  <h2 class="heading">ของขวัญสำหรับคนเก่ง! 🪙</h2>
-  <p class="subheading">มีของขวัญซ่อนอยู่ในการ์ดใบนี้<br>ลองใช้นิ้วหรือเมาส์ขูดดูนะ</p>
+  <h2 class="heading">ของขวัญสำหรับคนเก่งของเค้าาาา</h2>
+  <p class="subheading">ขูดๆได้เรยยย</p>
   <div class="scratch-container" id="scratch-container">
-    <span class="scratch-tag">A SECRET COUPON · NO. 018</span>
-    <div class="scratch-reward">🎟️ โควต้าอาหารอร่อย<br>&amp; กอดไม่จำกัด!!<div style="font-size:.75rem;font-weight:500;margin-top:8px">แลกได้ทุกเมื่อ ♡</div></div>
+    <div class="scratch-reward">🎟️ โควต้าทำตามทุ้กคำสั่ง<br>&amp; จุ๊บไม่อั้นกอดไม่อั้น<div style="font-size:.75rem;font-weight:500;margin-top:8px">มั่ยมีวันหมดอายุ ♡</div></div>
     <span class="reward-stamp">✿</span>
     <canvas id="scratch-canvas" aria-label="ขูดเพื่อเปิดเผยของขวัญ"></canvas>
   </div>
-  <p class="small-note" id="scratch-hint">ขูดไปเรื่อย ๆ จนกว่าของขวัญจะเปิดเผย</p>
-  <button id="btn-next-stage4" class="primary-btn" hidden onclick="nextScreen(5)">รับชิ้นสุดท้าย 🌸</button>
+  <p class="small-note" id="scratch-hint">ขูดอีกๆๆๆ</p>
+  <button id="btn-next-stage4" class="primary-btn" hidden onclick="nextScreen(5)">ของขวัญชิ้นสุดท้ายนา 🌸</button>
   <div class="progress-dots" aria-label="ฉากที่ 4 จาก 5"><span></span><span></span><span></span><span class="current"></span><span></span></div>
 </section>
 
 <!-- SCENE 5: FINAL GIFT -->
 <section id="screen-5" class="screen final-screen" aria-label="ของขวัญชิ้นสุดท้าย">
-  <p class="eyebrow">CHAPTER 05 · ONE LAST SURPRISE</p>
-  <h2 class="heading">ยังมีอีกอย่างนะ…</h2>
-  <p class="subheading" id="final-intro">ของขวัญชิ้นสุดท้าย รอให้เปิดอยู่นะ</p>
+  <h2 class="heading" id="final-heading">กดที่ของขวัญนะะ</h2>
   <button class="gift-btn" id="gift-box" onclick="openGift()" aria-label="เปิดกล่องของขวัญ">🎁</button>
   <div class="final-message" id="final-msg">
-    <div class="final-title">พัดรักซอที่สุ้ดด ❤️</div>
-    <p class="subheading" style="margin-top:12px">ขอให้เรามีความทรงจำดี ๆ ด้วยกันอีกเยอะเลยนะ ♡</p>
+    <div class="final-title">พัดรักจิ๊กซอที่สุ้ดด ❤️</div>
+    <p class="subheading" style="margin-top:12px">อยู่ด้วยกันรับดอกไม้ไปอีกนานๆนา ♡</p>
     <button class="soft-btn" style="margin-top:15px" onclick="location.reload()">↻ เริ่มดูใหม่</button>
   </div>
   <div class="bouquet-wrapper">
-    <svg class="bouquet-svg" id="bouquet" viewBox="0 0 400 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ช่อดอกไฮเดรนเยียสีพาสเทล">
-      <defs><linearGradient id="wrap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8d8c7"/><stop offset="1" stop-color="#b9a18a"/></linearGradient></defs>
-      <path d="M65 145 Q200 215 335 145 L275 320 L125 320Z" fill="url(#wrap)" stroke="#a88d75" stroke-width="2"/>
-      <path d="M200 250 Q120 185 95 125 Q145 140 200 250" fill="#829c7c"/>
-      <path d="M200 250 Q280 175 310 125 Q260 140 200 250" fill="#9eaf8a"/>
-      <path d="M200 250 Q185 135 200 75 Q225 145 200 250" fill="#6f8e70"/>
-      <g fill="#a9c7d3" stroke="#f1e5d6" stroke-width="2">
-        <circle cx="135" cy="110" r="29"/><circle cx="165" cy="85" r="27"/><circle cx="194" cy="110" r="31"/><circle cx="222" cy="85" r="27"/><circle cx="252" cy="112" r="30"/>
-        <circle cx="112" cy="145" r="27"/><circle cx="145" cy="145" r="30"/><circle cx="180" cy="145" r="28"/><circle cx="213" cy="145" r="30"/><circle cx="248" cy="148" r="28"/><circle cx="282" cy="145" r="25"/>
+    <svg class="bouquet-svg" id="bouquet" viewBox="0 0 420 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ช่อดอกไฮเดรนเยียสีพาสเทล">
+      <defs>
+        <linearGradient id="paperBack" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f5ece0"/>
+          <stop offset="100%" stop-color="#dfd0bc"/>
+        </linearGradient>
+        <linearGradient id="paperInner" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="100%" stop-color="#f2e8dc"/>
+        </linearGradient>
+        <linearGradient id="paperFrontLeft" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#efe3d3"/>
+          <stop offset="100%" stop-color="#cbb49c"/>
+        </linearGradient>
+        <linearGradient id="paperFrontRight" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e8d8c5"/>
+          <stop offset="100%" stop-color="#bfa68c"/>
+        </linearGradient>
+        <linearGradient id="ribbonMain" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#d9898d"/>
+          <stop offset="100%" stop-color="#a85f67"/>
+        </linearGradient>
+        <!-- แม่แบบกลีบดอกไฮเดรนเยีย 4 กลีบ -->
+        <g id="floret-blue">
+          <ellipse cx="0" cy="-7" rx="6.5" ry="7.5" fill="#a8CBE2" stroke="#f4f9fc" stroke-width="0.8"/>
+          <ellipse cx="0" cy="7" rx="6.5" ry="7.5" fill="#96bdd8" stroke="#f4f9fc" stroke-width="0.8"/>
+          <ellipse cx="-7" cy="0" rx="7.5" ry="6.5" fill="#b7d7ec" stroke="#f4f9fc" stroke-width="0.8"/>
+          <ellipse cx="7" cy="0" rx="7.5" ry="6.5" fill="#9fc5df" stroke="#f4f9fc" stroke-width="0.8"/>
+          <circle cx="0" cy="0" r="2.2" fill="#fff6d6"/>
+        </g>
+        <g id="floret-sky">
+          <ellipse cx="0" cy="-7" rx="6.5" ry="7.5" fill="#c3e0f4" stroke="#ffffff" stroke-width="0.8"/>
+          <ellipse cx="0" cy="7" rx="6.5" ry="7.5" fill="#aed2eb" stroke="#ffffff" stroke-width="0.8"/>
+          <ellipse cx="-7" cy="0" rx="7.5" ry="6.5" fill="#cce6f8" stroke="#ffffff" stroke-width="0.8"/>
+          <ellipse cx="7" cy="0" rx="7.5" ry="6.5" fill="#b8daf1" stroke="#ffffff" stroke-width="0.8"/>
+          <circle cx="0" cy="0" r="2.2" fill="#f7e6a7"/>
+        </g>
+        <g id="floret-lilac">
+          <ellipse cx="0" cy="-7" rx="6.2" ry="7" fill="#d3c8eb" stroke="#fbf9ff" stroke-width="0.8"/>
+          <ellipse cx="0" cy="7" rx="6.2" ry="7" fill="#c3b5e2" stroke="#fbf9ff" stroke-width="0.8"/>
+          <ellipse cx="-7" cy="0" rx="7" ry="6.2" fill="#dcd2f2" stroke="#fbf9ff" stroke-width="0.8"/>
+          <ellipse cx="7" cy="0" rx="7" ry="6.2" fill="#cbc0e8" stroke="#fbf9ff" stroke-width="0.8"/>
+          <circle cx="0" cy="0" r="2.2" fill="#fff3c4"/>
+        </g>
+        <g id="floret-pink">
+          <ellipse cx="0" cy="-6.5" rx="6" ry="7" fill="#f2cbd0" stroke="#fff8f9" stroke-width="0.8"/>
+          <ellipse cx="0" cy="6.5" rx="6" ry="7" fill="#e6b7be" stroke="#fff8f9" stroke-width="0.8"/>
+          <ellipse cx="-6.5" cy="0" rx="7" ry="6" fill="#f7d6da" stroke="#fff8f9" stroke-width="0.8"/>
+          <ellipse cx="6.5" cy="0" rx="7" ry="6" fill="#ecc2c8" stroke="#fff8f9" stroke-width="0.8"/>
+          <circle cx="0" cy="0" r="2.2" fill="#ffe9a8"/>
+        </g>
+        <!-- แม่แบบดอกยิปโซ -->
+        <g id="babys-breath">
+          <circle cx="0" cy="0" r="3" fill="#ffffff"/>
+          <circle cx="-5" cy="-4" r="2.3" fill="#fffdf7"/>
+          <circle cx="5" cy="-3" r="2.5" fill="#ffffff"/>
+          <circle cx="3" cy="5" r="2" fill="#fffdf7"/>
+        </g>
+      </defs>
+
+      <!-- กระดาษห่อชั้นหลังสุด -->
+      <path d="M55 150 L95 55 L175 85 L210 42 L245 85 L325 55 L365 150 L290 340 L130 340 Z" fill="url(#paperBack)" stroke="#cbb59d" stroke-width="1.5" stroke-linejoin="round"/>
+      <!-- กระดาษไขสีขาวชั้นใน -->
+      <path d="M72 155 L118 75 L210 62 L302 75 L348 155 L280 280 L140 280 Z" fill="url(#paperInner)" opacity="0.92"/>
+
+      <!-- ใบไม้และกิ่งยูคาลิปตัสด้านหลัง -->
+      <g fill="#7d9c78">
+        <path d="M135 160 Q85 110 75 68 Q125 85 145 150 Z"/>
+        <path d="M285 160 Q335 110 345 68 Q295 85 275 150 Z"/>
+        <path d="M210 135 Q190 65 210 28 Q230 65 210 135 Z" fill="#6b8c68"/>
+        <ellipse cx="95" cy="122" rx="18" ry="10" transform="rotate(-35 95 122)" fill="#8fac89"/>
+        <ellipse cx="325" cy="122" rx="18" ry="10" transform="rotate(35 325 122)" fill="#8fac89"/>
+        <ellipse cx="150" cy="65" rx="14" ry="8" transform="rotate(-20 150 65)" fill="#739370"/>
+        <ellipse cx="270" cy="65" rx="14" ry="8" transform="rotate(20 270 65)" fill="#739370"/>
       </g>
-      <g fill="#d9a6ae" stroke="#fff0df" stroke-width="2">
-        <circle cx="155" cy="125" r="16"/><circle cx="191" cy="92" r="15"/><circle cx="232" cy="120" r="17"/><circle cx="265" cy="132" r="15"/><circle cx="125" cy="135" r="14"/>
+
+      <!-- พื้นฐานพุ่มดอกไฮเดรนเยียเพื่อให้ดูแน่น -->
+      <circle cx="145" cy="125" r="52" fill="#9ec2d9"/>
+      <circle cx="268" cy="128" r="50" fill="#b9cbe8"/>
+      <circle cx="208" cy="102" r="54" fill="#b4d5ec"/>
+      <circle cx="175" cy="155" r="46" fill="#e6bec5"/>
+      <circle cx="242" cy="155" r="46" fill="#a8c9e0"/>
+
+      <!-- กลีบดอกไฮเดรนเยียจัดเรียงซ้อนกัน -->
+      <!-- กลุ่มซ้าย (ฟ้าพาสเทล) -->
+      <use href="#floret-blue" x="112" y="112" transform="rotate(12 112 112)"/>
+      <use href="#floret-sky" x="132" y="96" transform="rotate(-8 132 96)"/>
+      <use href="#floret-blue" x="152" y="108" transform="rotate(20 152 108)"/>
+      <use href="#floret-sky" x="105" y="135" transform="rotate(-15 105 135)"/>
+      <use href="#floret-blue" x="128" y="125"/>
+      <use href="#floret-lilac" x="146" y="132" transform="rotate(18 146 132)"/>
+      <use href="#floret-sky" x="120" y="150" transform="rotate(8 120 150)"/>
+
+      <!-- กลุ่มกลางบน (ฟ้าอ่อน & ลาเวนเดอร์) -->
+      <use href="#floret-sky" x="182" y="75" transform="rotate(-10 182 75)"/>
+      <use href="#floret-blue" x="208" y="68" transform="rotate(5 208 68)"/>
+      <use href="#floret-sky" x="234" y="76" transform="rotate(14 234 76)"/>
+      <use href="#floret-lilac" x="170" y="95" transform="rotate(12 170 95)"/>
+      <use href="#floret-sky" x="195" y="92"/>
+      <use href="#floret-blue" x="220" y="92" transform="rotate(-12 220 92)"/>
+      <use href="#floret-pink" x="245" y="96" transform="rotate(8 245 96)"/>
+      <use href="#floret-sky" x="184" y="114" transform="rotate(-6 184 114)"/>
+      <use href="#floret-lilac" x="210" y="112" transform="rotate(15 210 112)"/>
+      <use href="#floret-sky" x="235" y="115" transform="rotate(-10 235 115)"/>
+
+      <!-- กลุ่มขวา (ม่วงลาเวนเดอร์ & ฟ้า) -->
+      <use href="#floret-lilac" x="268" y="96" transform="rotate(-14 268 96)"/>
+      <use href="#floret-blue" x="292" y="108" transform="rotate(10 292 108)"/>
+      <use href="#floret-sky" x="262" y="120"/>
+      <use href="#floret-lilac" x="285" y="128" transform="rotate(22 285 128)"/>
+      <use href="#floret-blue" x="308" y="132" transform="rotate(-8 308 132)"/>
+      <use href="#floret-sky" x="295" y="152" transform="rotate(12 295 152)"/>
+
+      <!-- กลุ่มด้านหน้า (ชมพูพีช & ฟ้าสดใส) -->
+      <use href="#floret-pink" x="152" y="155" transform="rotate(-12 152 155)"/>
+      <use href="#floret-pink" x="176" y="142" transform="rotate(8 176 142)"/>
+      <use href="#floret-sky" x="202" y="138" transform="rotate(-5 202 138)"/>
+      <use href="#floret-lilac" x="226" y="142" transform="rotate(14 226 142)"/>
+      <use href="#floret-blue" x="250" y="146" transform="rotate(-10 250 146)"/>
+      <use href="#floret-pink" x="272" y="154" transform="rotate(6 272 154)"/>
+      <use href="#floret-sky" x="140" y="172" transform="rotate(15 140 172)"/>
+      <use href="#floret-pink" x="166" y="168"/>
+      <use href="#floret-blue" x="192" y="164" transform="rotate(-14 192 164)"/>
+      <use href="#floret-pink" x="216" y="166" transform="rotate(10 216 166)"/>
+      <use href="#floret-sky" x="242" y="168" transform="rotate(-6 242 168)"/>
+      <use href="#floret-lilac" x="265" y="174" transform="rotate(12 265 174)"/>
+
+      <!-- ดอกยิปโซสีขาวแซมรอบช่อ -->
+      <use href="#babys-breath" x="98" y="96"/>
+      <use href="#babys-breath" x="156" y="68"/>
+      <use href="#babys-breath" x="258" y="66"/>
+      <use href="#babys-breath" x="315" y="98"/>
+      <use href="#babys-breath" x="102" y="168"/>
+      <use href="#babys-breath" x="315" y="166"/>
+      <use href="#babys-breath" x="206" y="182"/>
+
+      <!-- กระดาษห่อช่อด้านหน้าพับซ้อนสไตล์เกาหลี -->
+      <path d="M68 152 Q145 205 225 190 L185 348 L125 348 Z" fill="url(#paperFrontLeft)" stroke="#b89f86" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M352 152 Q275 205 195 190 L235 348 L295 348 Z" fill="url(#paperFrontRight)" stroke="#b0967c" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M138 185 Q210 215 282 185 L255 352 L165 352 Z" fill="url(#paperBack)" stroke="#bca38a" stroke-width="1.5" stroke-linejoin="round"/>
+
+      <!-- ริบบิ้นและโบว์ผูกช่อดอกไม้ -->
+      <path d="M158 258 Q210 274 262 258 L258 273 Q210 287 162 273 Z" fill="url(#ribbonMain)"/>
+      <!-- หางริบบิ้นพริ้วๆ -->
+      <path d="M202 270 Q175 312 155 356 L176 352 Q194 315 208 274 Z" fill="#b96b71"/>
+      <path d="M218 270 Q245 312 265 356 L244 352 Q226 315 212 274 Z" fill="#a85f67"/>
+      <!-- หูโบว์ซ้าย-ขวา -->
+      <path d="M210 266 C175 235, 145 258, 165 278 C180 290, 200 276, 210 266 Z" fill="url(#ribbonMain)" stroke="#965057" stroke-width="1"/>
+      <path d="M210 266 C245 235, 275 258, 255 278 C240 290, 220 276, 210 266 Z" fill="url(#ribbonMain)" stroke="#965057" stroke-width="1"/>
+      <!-- ปมโบว์ตรงกลาง -->
+      <ellipse cx="210" cy="267" rx="11" ry="9" fill="#9e555d" stroke="#87444b" stroke-width="1"/>
+
+      <!-- การ์ดใบเล็กห้อยที่ช่อดอกไม้ -->
+      <line x1="252" y1="265" x2="282" y2="225" stroke="#a88d75" stroke-width="1.5"/>
+      <g transform="translate(282, 222) rotate(12)">
+        <rect x="-18" y="-12" width="36" height="24" rx="4" fill="#fffaf0" stroke="#c8b096" stroke-width="1.5"/>
+        <text x="0" y="5" text-anchor="middle" font-size="13" fill="#c8797d" font-family="serif">♥</text>
       </g>
-      <g fill="#e8d7b9"><circle cx="155" cy="125" r="4"/><circle cx="191" cy="92" r="4"/><circle cx="232" cy="120" r="4"/><circle cx="265" cy="132" r="4"/></g>
-      <path d="M155 250 Q200 265 245 250 L220 320 L180 320Z" fill="#c8797d"/>
-      <path d="M178 253 Q200 277 222 253 Q200 293 178 253" fill="#a85f67"/><circle cx="200" cy="262" r="9" fill="#a85f67"/>
-      <path d="M125 320 L178 268 L190 320 M275 320 L222 268 L210 320" fill="#d8b9a5" opacity=".7"/>
-      <path d="M285 200 L302 224 L270 225Z" fill="#fff2bd" stroke="#b9a18a" stroke-width="1.5"/>
-      <text x="285" y="219" text-anchor="middle" font-size="10" fill="#8a6a53" font-family="serif">♡</text>
     </svg>
   </div>
   <div class="progress-dots" aria-label="ฉากที่ 5 จาก 5"><span></span><span></span><span></span><span></span><span class="current"></span></div>
@@ -262,7 +394,7 @@ button:focus-visible { outline:3px solid var(--blue-deep); outline-offset:4px; }
 <script>
 const TOTAL_PHOTOS = 7;
 let photosTaken = 0;
-const photoEmojis = ['🌷','☁️','🧸','🌅','💌','🌸','❤️'];
+const photoImages = ['Pic1.jpg', 'Pic2.jpg', 'Pic3.jpg', 'Pic4.jpg', 'Pic5.jpg', 'Pic6.jpg'];
 const photoColors = ['#e9c6c1','#b9d0d7','#e6d8bd','#c6cdb5','#d7c3dc','#f0d7a6','#d7b2ad'];
 
 function nextScreen(id) {
@@ -270,7 +402,6 @@ function nextScreen(id) {
   const next = document.getElementById('screen-' + id);
   next.classList.add('active');
   if (id === 4) initScratchCard();
-  if (id === 5) document.getElementById('final-intro').textContent = 'ของขวัญชิ้นสุดท้าย รอให้เปิดอยู่นะ ♡';
 }
 function makeCalendar() {
   const grid = document.getElementById('calendar-grid');
@@ -298,10 +429,25 @@ function takePhoto() {
   const flash=document.getElementById('flash');
   flash.classList.add('flash');setTimeout(()=>flash.classList.remove('flash'),120);
   const art=document.getElementById('scene-art');
-  art.animate([{transform:'scale(.85) rotate(-5deg)'},{transform:'scale(1.1) rotate(4deg)'},{transform:'scale(1) rotate(0)'}],{duration:280});
+  
   const gallery=document.getElementById('gallery');
   const frame=document.createElement('div');frame.className='polaroid';frame.style.setProperty('--tilt',photosTaken%2?'2deg':'-3deg');
-  const picture=document.createElement('div');picture.className='mini-photo';picture.style.setProperty('--photo-bg',photoColors[photosTaken]);picture.textContent=photoEmojis[photosTaken];
+  const picture=document.createElement('div');picture.className='mini-photo';picture.style.setProperty('--photo-bg',photoColors[photosTaken]);
+  
+  // แสดงภาพทั้งในช่องเลนส์กล้องและในแผ่นโพลารอยด์
+  if(photosTaken === 6) {
+    const num7Html = '<div style="display:flex; justify-content:center; align-items:center; width:100%; height:100%; font-size:4.5rem; color:#453b35; font-weight:bold; font-family:\'Mali\',cursive;">7</div>';
+    picture.innerHTML = num7Html;
+    art.style.backgroundColor = photoColors[6];
+    art.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; width:100%; height:100%; font-size:5.5rem; color:#453b35; font-weight:bold; font-family:\'Mali\',cursive;">7</div>';
+  } else {
+    const imgHtml = `<img src="${photoImages[photosTaken]}" style="width: 100%; height: 100%; object-fit: cover; display: block;">`;
+    picture.innerHTML = imgHtml;
+    art.innerHTML = imgHtml;
+  }
+
+  art.animate([{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:260});
+  
   const label=document.createElement('div');label.className='mini-label';label.textContent=`MEMORY 0${photosTaken+1}`;
   frame.append(picture,label);gallery.appendChild(frame);
   photosTaken++;
@@ -309,7 +455,8 @@ function takePhoto() {
   gallery.scrollTo({left:gallery.scrollWidth,behavior:'smooth'});
   if(photosTaken===TOTAL_PHOTOS) {
     document.getElementById('btn-next-stage2').hidden=false;
-    document.getElementById('camera-hint-text').textContent='ครบทั้ง 7 ภาพแล้ว ความทรงจำชุดนี้เก็บไว้ได้เลย ♡';
+    const hintText = document.getElementById('camera-hint-text');
+    if (hintText) hintText.textContent='มีจดหมายมาส่งงง ♡';
     document.getElementById('shutter').disabled=true;
     document.getElementById('shutter').style.opacity='.45';
   }
@@ -334,7 +481,7 @@ function revealLetter() {
   document.getElementById('btn-next-stage3').hidden=false;
 }
 
-/* Scratch card: canvas scales to the actual card size and supports touch/mouse. */
+/* Scratch card: canvas scales to the actual card size and supports touch/mouse without freezing. */
 let scratchInitialized=false;
 function initScratchCard() {
   const canvas=document.getElementById('scratch-canvas'),container=document.getElementById('scratch-container');
@@ -350,22 +497,44 @@ function initScratchCard() {
   ctx.strokeStyle='rgba(255,255,255,.22)';ctx.lineWidth=1;
   for(let x=-rect.height;x<rect.width;x+=13){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+rect.height,rect.height);ctx.stroke();}
   ctx.fillStyle='#5f554b';ctx.textAlign='center';ctx.font='600 18px Mali, sans-serif';ctx.fillText('ขูดเลย! ♡',rect.width/2,rect.height/2+6);
-  let drawing=false,scratched=0,unlocked=false;
+  
+  let drawing=false,scratched=0,unlocked=false,lastPos=null;
   function pos(e){const r=canvas.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
   function scratch(e) {
-    if(!drawing||unlocked)return;e.preventDefault();const p=pos(e);
-    ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,22,0,Math.PI*2);ctx.fill();scratched++;
-    if(scratched>35){unlocked=true;document.getElementById('btn-next-stage4').hidden=false;document.getElementById('scratch-hint').textContent='ของขวัญเปิดแล้ว! หวังว่าจะทำให้ยิ้มได้นะ ♡';}
+    if(!drawing)return;
+    e.preventDefault();
+    const p=pos(e);
+    ctx.globalCompositeOperation='destination-out';
+    ctx.lineCap='round';
+    ctx.lineJoin='round';
+    ctx.lineWidth=48;
+    ctx.beginPath();
+    if(lastPos){
+      ctx.moveTo(lastPos.x,lastPos.y);
+      ctx.lineTo(p.x,p.y);
+      ctx.stroke();
+    } else {
+      ctx.arc(p.x,p.y,24,0,Math.PI*2);
+      ctx.fill();
+    }
+    lastPos=p;
+    scratched++;
+    if(scratched>30 && !unlocked){
+      unlocked=true;
+      document.getElementById('btn-next-stage4').hidden=false;
+    }
   }
-  canvas.onpointerdown=e=>{drawing=true;try{canvas.setPointerCapture(e.pointerId)}catch(_){}scratch(e)};
+  canvas.onpointerdown=e=>{drawing=true;lastPos=pos(e);try{canvas.setPointerCapture(e.pointerId)}catch(_){}scratch(e)};
   canvas.onpointermove=scratch;
-  canvas.onpointerup=()=>drawing=false;
-  canvas.onpointercancel=()=>drawing=false;
+  canvas.onpointerup=()=>{drawing=false;lastPos=null;};
+  canvas.onpointercancel=()=>{drawing=false;lastPos=null;};
   scratchInitialized=true;
 }
 
 function openGift() {
   document.getElementById('gift-box').style.display='none';
+  const finalHeading = document.getElementById('final-heading');
+  if (finalHeading) finalHeading.style.display='none';
   document.getElementById('bouquet').classList.add('show');
   setTimeout(()=>document.getElementById('final-msg').classList.add('show'),650);
   for(let i=0;i<26;i++){
